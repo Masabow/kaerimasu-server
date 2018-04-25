@@ -9,9 +9,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+
 var app = express();
 
-var pos = {'null':null};
+pos = {'null':null};
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -33,13 +34,28 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 app.post('/', function(req, res) {
-	pos = req.body;
+	console.log("POST/:" );
 	console.log(req.body);
-    res.send(pos);
+	var id = req.body.req_status;
+	if (id === 'kaerimasu') {
+		user.tochan.kaerimasu();
+	} else if (id === 'kaerimasita') {
+		user.tochan.kaerimasita();
+	}
 });
 
-app.get('/touchan', function(req, res) {
-	res.send(pos);
+app.post('/user_status', function(req, res) {
+	user.tochan.data.status_code = req.body.status;
+});
+
+app.post('/user_pos', function(req, res) {
+	user.tochan.setPos(req.body);
+	console.log(user.tochan.data.pos);
+});
+
+app.get('/user', function(req, res) {
+	console.log(user.tochan.data.pos);
+	res.send(user.tochan.data);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
