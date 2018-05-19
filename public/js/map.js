@@ -1,9 +1,6 @@
 /**
  * http://usejsdoc.org/
  */
-/**
- * http://usejsdoc.org/
- */
 $(document).ready(function() {
 	$('#kaerimasu').click(function() {
 		$.ajax({

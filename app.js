@@ -7,12 +7,10 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
-
+  , path = require('path')
+  , debug = require('debug')('app');
 
 var app = express();
-
-pos = {'null':null};
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -28,36 +26,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 }
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-
-app.post('/', function(req, res) {
-	console.log("POST/:" );
-	console.log(req.body);
-	var id = req.body.req_status;
-	if (id === 'kaerimasu') {
-		user.tochan.kaerimasu();
-	} else if (id === 'kaerimasita') {
-		user.tochan.kaerimasita();
-	}
+app.post('/', function (req, res) {
+  debug('POST/:a');
+  debug(req.body);
 });
 
-app.post('/user_status', function(req, res) {
-	user.tochan.data.status_code = req.body.status;
+app.post('/user_status', function (req, res) {
+  var id = req.body.req_status;
+  if (id === 'kaerimasu') {
+    user.tochan.kaerimasu();
+  } else if (id === 'kaerimasita') {
+    user.tochan.kaerimasita();
+  }
 });
 
-app.post('/user_pos', function(req, res) {
-	user.tochan.setPos(req.body);
-	console.log(user.tochan.data.pos);
+app.post('/user_pos', function (req, res) {
+  user.tochan.setPos(req.body);
+  debug(user.tochan.data.pos);
 });
 
-app.get('/user', function(req, res) {
-	console.log(user.tochan.data.pos);
-	res.send(user.tochan.data);
+app.get('/user', function (req, res) {
+  debug(user.tochan.data.pos);
+  res.send(user.tochan.data);
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(app.get('port'), function () {
+  debug('Express server listening on port ' + app.get('port'));
 });
