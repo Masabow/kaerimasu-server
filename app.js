@@ -50,8 +50,9 @@ app.post('/user_status', function (req, res) {
 });
 
 app.post('/user_pos', function (req, res) {
-  user.tochan.setPos(req.body);
   debug(user.tochan.data.pos);
+  user.tochan.setPos(req.body);
+  res.send('ok');
 });
 
 app.get('/user', function (req, res) {
