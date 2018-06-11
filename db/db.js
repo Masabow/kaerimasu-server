@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-module.exports = new Sequelize('kaerimasu', 'kaerimasu', 'takosu111', {
-  host: 'localhost',
-  dialect: 'sqlite',
+module.exports = new Sequelize('postgres', 'postgres', 'fuyumasa', {
+  host: process.env.DATABASE_URL,
+  dialect: 'postgres',
   operatorsAliases: false,
 
   pool: {
@@ -14,3 +14,12 @@ module.exports = new Sequelize('kaerimasu', 'kaerimasu', 'takosu111', {
   // SQLite only
   storage: '.db/db.sqlite'
 });
+
+module.exports.testAuth = ()=>{
+  module.exports.authenticate().then(()=>{
+      console.log('done');
+  })
+  .catch(err=>{
+      console.log(err);
+  })
+};

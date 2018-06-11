@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/test/func.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "プログラムの起動",
             "program": "${workspaceFolder}\\app.js",
             "env":{"DEBUG":"app"} // debug.js

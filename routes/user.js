@@ -10,6 +10,10 @@ var STATUS_NORMAL = 0;
 var STATUS_KAERU = 1;
 var NM_STATUS_NORMAL = '異常なし';
 var NM_STATUS_KAERU = '帰ります';
+var db = require('../db/db');
+
+db.testAuth();
+
 exports.tochan = {
   data: {
     status_code: 0,
