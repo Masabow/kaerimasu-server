@@ -1,5 +1,5 @@
 var db = require('../db/db'),
-  seq = require('Sequelize');
+  seq = require('sequelize');
 module.exports = db.define('timeline', {
   latitude:{type:seq.DOUBLE},
   longitude:{type:seq.DOUBLE},
