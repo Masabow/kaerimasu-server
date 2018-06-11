@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , debug = require('debug')('app');
+  , debug = require('debug')('app')
+  , timeLine = require('./model/timeline')
+  , db = require('./db/db');
 
 var app = express();
 
@@ -50,9 +52,21 @@ app.post('/user_status', function (req, res) {
 });
 
 app.post('/user_pos', function (req, res) {
-  debug(user.tochan.data.pos);
-  user.tochan.setPos(req.body);
-  res.send('ok');
+  debug(req.body);
+  var j = req.body;
+  var test = {
+    heading: j.heading,
+    latitude: j.latitude,
+    accuracy: j.accuracy,
+    speed: j.speed,
+    longitude: j.longitude,
+    timestamp: j.timestamp    
+  };
+  db.sync().then(()=>timeLine.create(
+    test)).then(jane => {
+      console.log(jane);
+      res.send('ok');});
+//  user.tochan.setPos(req.body);
 });
 
 app.get('/user', function (req, res) {
