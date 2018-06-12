@@ -1,4 +1,7 @@
 const Sequelize = require('sequelize');
+if (process.env.DATABASE_URL) {
+  module.exports = new Sequelize(process.env.DATABASE_URL);
+} else {
 module.exports = new Sequelize('postgres', 'postgres', 'fuyumasa', {
   host: process.env.DATABASE_URL,
   dialect: 'postgres',
@@ -14,6 +17,7 @@ module.exports = new Sequelize('postgres', 'postgres', 'fuyumasa', {
   // SQLite only
   storage: '.db/db.sqlite'
 });
+}
 
 module.exports.testAuth = ()=>{
   module.exports.authenticate().then(()=>{
