@@ -6,6 +6,7 @@ module.exports = new Sequelize('postgres', 'postgres', 'fuyumasa', {
   host: process.env.DATABASE_URL,
   dialect: 'postgres',
   operatorsAliases: false,
+  timezone:'+09:00',
 
   pool: {
     max: 5,
