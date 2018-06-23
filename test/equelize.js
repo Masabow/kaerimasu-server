@@ -1,7 +1,7 @@
 var db = require('../db/db'),
     timeLine = require('../model/timeline');
-describe('マジックメソッド機能', function(){
-    it('1秒待つこと', function(done) {
+describe('DB', function(){
+    it('insert', function(done) {
         var test = { altitude: '0',
         heading: '0',
         latitude: '34.5104144',
